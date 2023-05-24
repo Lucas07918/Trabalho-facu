@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const MomentsScreen = () => {
+const RecebidosScreen = () => {
     return(
         <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-            <Text>Entregas</Text>
+            <Text>Recebidos</Text>
         </View>
     );
 }
 
 
-export default MomentsScreen;
+export default RecebidosScreen;

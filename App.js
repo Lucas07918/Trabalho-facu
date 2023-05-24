@@ -9,20 +9,23 @@ import RoutesP from "./Porteiro/navigation/Routes"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import OnboardingScreen from "./src/screens/OnboardingScreen";
+import AuthProvider from "./src/context/authContext";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-    <Stack.Navigator  screenOptions={{headerShown: false}} >
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        <Stack.Screen name="TPUser" component={TypeUser} />
-        <Stack.Screen name="RoutesM" component={Routes} />
-        <Stack.Screen name="RoutesS" component={RoutesS} />
-        <Stack.Screen name="RoutesP" component={RoutesP} />
-      </Stack.Navigator>
-    </NavigationContainer>
+        <AuthProvider>
+          <Stack.Navigator  screenOptions={{headerShown: false}} >
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen name="TPUser" component={TypeUser} />
+            <Stack.Screen name="RoutesM" component={Routes} />
+            <Stack.Screen name="RoutesS" component={RoutesS} />
+            <Stack.Screen name="RoutesP" component={RoutesP} />
+          </Stack.Navigator>
+        </AuthProvider>
+      </NavigationContainer>
   );
   // <Routes />
 }

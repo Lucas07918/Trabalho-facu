@@ -11,6 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import TabNavigator from "./TabNavigator";
+import DeliverScreen from "../screens/DeliverScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -40,7 +41,7 @@ const AppStackPorteiro = () => {
                     <Ionicons name="ios-chatbubbles-sharp" size={22} color={color} />
                 ), headerShown: true, headerStyle: {backgroundColor: '#820ad1'}, headerTintColor: '#fff'
             }} />
-            <Drawer.Screen component={MomentsScreen} name="Entregas" options={{
+            <Drawer.Screen component={DeliverScreen} name="Entregas" options={{
                 drawerIcon: ({color}) => (
                     <MaterialCommunityIcons name="truck-delivery" size={22} color={color} />
                 )

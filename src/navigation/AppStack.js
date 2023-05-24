@@ -3,7 +3,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import ProfileScreen from "../screens/ProfileScreen";
 import MessageScreen from "../screens/MessageScreen";
-import MomentsScreen from "../screens/MomentsScreen";
+import DeliverScreen from "../screens/DeliverScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CustomDrawer from "../components/CustomDrawer";
 
@@ -40,7 +40,7 @@ const AppStack = () => {
                     <Ionicons name="ios-chatbubbles-sharp" size={22} color={color} />
                 ), headerShown: true, headerStyle: {backgroundColor: '#19ba67'}, headerTintColor: '#fff'
             }} />
-            <Drawer.Screen component={MomentsScreen} name="Entregas" options={{
+            <Drawer.Screen component={DeliverScreen} name="Entregas" options={{
                 drawerIcon: ({color}) => (
                     <MaterialCommunityIcons name="truck-delivery" size={22} color={color} />
                 )

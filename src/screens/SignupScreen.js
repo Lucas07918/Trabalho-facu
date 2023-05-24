@@ -6,14 +6,33 @@ import FormInput from "../components/FormInput";
 import FormButton from "../components/FormButton";
 import SocialButton from "../components/SocialButton";
 // import { AuthContext } from "../navigation/AuthProvider";
+import { database } from "../../config/firebase.js";
+import { collection, addDoc } from "firebase/firestore";
 
 import { auth } from "../../config/firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 
 const SignupScreen = ({navigation}) => {
+    const [name, setName] = useState();
+    const [bloco, setBloco] = useState();
+    const [num_apart, setNum_apart] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
+
+    async function addRegister() {
+        try {
+          await addDoc(collection(database, "Usuario"), {
+            bloco: bloco,
+            nome: name,
+            num_apart: num_apart,
+            email: email,
+          });
+        //   navigation.navigate("Login");
+        } catch (error) {
+          console.error(error);
+        }
+      }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -25,6 +44,7 @@ const SignupScreen = ({navigation}) => {
     }, []);
 
     const signup = async () => {
+        await addRegister()
         await createUserWithEmailAndPassword(auth, email, password)
     }
 
@@ -33,6 +53,33 @@ const SignupScreen = ({navigation}) => {
     return(
         <View style={styles.container}>
             <Text style={styles.text}>Crie uma conta</Text>
+            <FormInput 
+                labelValue={name}
+                onChangeText={(userName) => setName(userName)}
+                placeholderText="Nome"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+            />
+            <FormInput 
+                labelValue={bloco}
+                onChangeText={(userBloco) => setBloco(userBloco)}
+                placeholderText="Bloco"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+            />
+            <FormInput 
+                labelValue={num_apart}
+                onChangeText={(userNum_apart) => setNum_apart(userNum_apart)}
+                placeholderText="Número do apartamento"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+            />
             <FormInput 
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}

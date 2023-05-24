@@ -1,15 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { SafeAreaView, View, Text, TouchableOpacity, Image, Button, StyleSheet } from "react-native";
 import FormInput from "../components/FormInput";
 import FormButton from "../components/FormButton";
 import SocialButton from "../components/SocialButton";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
-import { auth } from "../../config/firebase"
+
+import { auth, database } from "../../config/firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
+import { AuthContext } from "../context/authContext";
 
 const LoginScreen = ({navigation}) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState('lucasps4silva@gmail.com');
+    const [password, setPassword] = useState('123456');
+    const {setUserInfo} = useContext(AuthContext)
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -21,7 +25,44 @@ const LoginScreen = ({navigation}) => {
     }, []);
 
     const signin = async () => {
-        await signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, email, password).then((respostaLogin)=>{
+            
+            
+            const userRef = collection(database, "Usuario");
+            const consulta = query(userRef, where("email", "==", email))
+
+            
+            const resposta = async () => await getDocs(consulta);
+
+            console.log('###############################################')
+            console.log('###############################################')
+            console.log('###############################################')
+            
+            resposta().then((respostaPesquisa) => {
+               
+                respostaPesquisa.docs.forEach((doc)=>{
+                    console.log('doc',doc.data())
+                    setUserInfo(doc.data())
+                })
+            })
+
+
+           /* const pedidosRef = collection(database, "Pedidos");
+            const consulta = query(pedidosRef, where('bloco','==','B'), where('num_apart','==',302))
+
+            //console.log(getDocs(q))
+            
+            const resposta = async () => await getDocs(consulta);
+            resposta().then((respostaPesquisa)=> {
+            const data = [];
+            respostaPesquisa.docs.forEach((doc)=>{
+                data.push(doc.data())
+            })
+            setTasks(data)
+            }).catch((erro)=>{
+            console.log(erro)
+            })*/
+        })
     }
 
     return(
